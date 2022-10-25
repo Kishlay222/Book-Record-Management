@@ -10,12 +10,13 @@ endpoints are the channel through which we can communicate ex- /user
 
 ## /users
 
-POST: Create a new user (send data to server)
-GET: Get all list of users (get data grom server)
+(to add a emoji 'fn+start' btn + ';')
+POST: Create a new user (send data to server) ✅
+GET: Get all list of users (get data grom server) ✅
 
 ## /users/{id}
 
-GET: Get a user by id
+GET: Get a user by id ✅
 PUT: Update a user by id (update certain fields)
 DELETE: Delete a user by id(check if he/she still has an issued book)
 (is there any fine to be paid) ---(delete data from server)
