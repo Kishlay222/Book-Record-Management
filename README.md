@@ -17,7 +17,7 @@ GET: Get all list of users (get data grom server) ✅
 ## /users/{id}
 
 GET: Get a user by id ✅
-PUT: Update a user by id (update certain fields)
+PUT: Update a user by id (update certain fields) ✅
 DELETE: Delete a user by id(check if he/she still has an issued book)
 (is there any fine to be paid) ---(delete data from server)
 
@@ -27,17 +27,17 @@ GET: Get user subscription details 1. Date of subscription 2. Expiration date 3.
 
 ## /books
 
-GET: Get all list of books
+GET: Get all list of books ✅
 POST: Create/Add a new book
 
 ## /books/{id}
 
-GET: Get a book by id
+GET: Get a book by id ✅
 PUT: Update a book status by id
 
-## /books/issued
+## /books/issued/by-users
 
-GET: Get all issued books
+GET: Get all issued books ✅
 
 ## /books/issued/withFine
 
