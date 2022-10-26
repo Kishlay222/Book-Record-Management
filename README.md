@@ -2,11 +2,11 @@
 
 # kishlay kumar singh
 
-This is a book record management
+This is a book record management...
 
 # Routes and Endpoints
 
-endpoints are the channel through which we can communicate ex- /user
+Endpoints are the channel through which we can communicate ex- /user
 
 ## /users
 
@@ -19,21 +19,25 @@ GET: Get all list of users (get data grom server) ✅
 GET: Get a user by id ✅
 PUT: Update a user by id (update certain fields) ✅
 DELETE: Delete a user by id(check if he/she still has an issued book)
-(is there any fine to be paid) ---(delete data from server)
+(is there any fine to be paid) ---(delete data from server) ✅
 
 ## /users/subscription-details/{id}
 
-GET: Get user subscription details 1. Date of subscription 2. Expiration date 3. Fine(if any)
+GET: Get user subscription details
+
+1. Date of subscription
+2. Expiration date
+3. Fine(if any)
 
 ## /books
 
 GET: Get all list of books ✅
-POST: Create/Add a new book
+POST: Create/Add a new book ✅
 
 ## /books/{id}
 
 GET: Get a book by id ✅
-PUT: Update a book status by id
+PUT: Update a book status by id ✅
 
 ## /books/issued/by-users
 

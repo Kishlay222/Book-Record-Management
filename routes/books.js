@@ -60,7 +60,6 @@ router.get("/:id", (req, res) => {
  * Parameter:none
  */
 
-
 router.get("/issued/by-users", (req, res) => {
     const usersWithIssuedBooks = users.filter((each) => {
         if (each.issuedBook) return each; //filtering users having issuedBook property
@@ -90,6 +89,83 @@ router.get("/issued/by-users", (req, res) => {
         data: issuedBooks
     });
 });
+
+/**
+ * Route: /books
+ * Method: POST
+ * Description:Create/Add a book 
+ * Access:Public
+ * Parameter:none
+ * Data: id,name,author,genre,price,publisher (need for a new book to add)
+ */
+
+router.post("/", (req, res) => {
+    const {
+        data
+    } = req.body;
+    //if data is empty for new book 
+    if (!data) {
+        return res.status(400).json({
+            success: false,
+            message: "Data not provided"
+        });
+    }
+    //data provided---find any other book with same id exists or not 
+    //if exists dont create
+    const book = books.find((each) => each.id == data.id);
+    if (book) {
+        return res.status(404).json({
+            success: false,
+            message: "Book already exists,use a unique id"
+        });
+    }
+    //if id is unique then
+    const newbooklist = [...books, data];
+    res.status(200).json({
+        success: true,
+        data: newbooklist
+    });
+
+});
+
+/**
+ * Route: /books/{id}
+ * Method: PUT
+ * Description:Update a book details
+ * Access:Public
+ * Parameter:id
+ * Data: id,name,author,genre,price,publisher (need for a new book to add)
+ */
+
+router.put("/:id", (req, res) => {
+    const {
+        id
+    } = req.params;
+    const {
+        data
+    } = req.body;
+    const book = books.find((each) => each.id === id);
+    if (!book) {
+        return res.status(404).json({
+            success: false,
+            message: "Book not found to update by id"
+        });
+    }
+    const updatedData = books.map((each) => {
+        if (each.id === id) {
+            return {
+                ...each,
+                ...data //updation from req.body as its equal to data
+            };
+        }
+        return each;
+    });
+    res.status(200).json({
+        success: true,
+        data: updatedData
+    });
+});
+
 
 
 module.exports = router;
