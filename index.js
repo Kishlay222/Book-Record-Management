@@ -7,11 +7,20 @@ const { // destructuring
     users
 } = require('./data/users.json');
 
+const dotenv = require("dotenv");
+
 //importing routes
 const usersRouter = require("./routes/users.js"); //path for users
 const booksRouter = require("./routes/books.js"); //path for books
+const dbConnection = require("./dbConnections");
+
+dotenv.config(); //to run dotenv 
 
 const app = express();
+
+dbConnection();
+//only after app
+
 const PORT = 8081;
 
 app.use(express.json());
