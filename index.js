@@ -12,7 +12,7 @@ const dotenv = require("dotenv");
 //importing routes
 const usersRouter = require("./routes/users.js"); //path for users
 const booksRouter = require("./routes/books.js"); //path for books
-const dbConnection = require("./dbConnections");
+const dbConnection = require("./dbConnections"); //database connection
 
 dotenv.config(); //to run dotenv 
 

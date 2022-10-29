@@ -158,7 +158,7 @@ router.delete("/:id", (req, res) => {
 });
 
 /**
- * Route: /users/isubscription-details/id
+ * Route: /users/subscription-details/id
  * Method: GET
  * Description:Get a user's subscription-details
  * Access:Public
@@ -179,16 +179,16 @@ router.get("/subscription-details/:id", (req, res) => {
     }
     const getDateInDays = (data = "") => {
         let date;
-        if (date == "") {
+        if (data === "") {
             date = new Date(); //current date
         } else {
             date = new Date(data); //string format of given date 
         }
-        let days = Math.floor(date / (1000 * 60 * 60 * 240)); //starts from 1st jan 1970
+        let days = Math.floor(date / (1000 * 60 * 60 * 24)); //starts from 1st jan 1970
         return days;
     };
 
-    const subscriptionType = (data) => {
+    const subscriptionType = (date) => {
         if (user.subscriptionType === "Basic") {
             date += 90;
         } else if (user.subscriptionType === "Standard") {
@@ -205,12 +205,18 @@ router.get("/subscription-details/:id", (req, res) => {
     let subscriptionDate = getDateInDays(user.subscriptionDate);
     let subscriptionExpirationDate = subscriptionType(subscriptionDate);
 
+    console.log("returnDate", returnDate);
+    console.log("currentDate", currentDate);
+    console.log("subscriptionDate", subscriptionDate);
+    console.log("subscriptionExpDate", subscriptionExpirationDate);
+
     const data = {
         ...user,
         subscriptionExpired: subscriptionExpirationDate < currentDate,
         daysLeftToExpire: subscriptionExpirationDate <= currentDate ? 0 : subscriptionExpirationDate - currentDate,
         fine: returnDate < currentDate ? subscriptionExpirationDate <= currentDate ? 200 : 100 : 0
     };
+
     res.status(200).json({
         success: true,
         data

@@ -8,6 +8,10 @@ This is a book record management...
 
 Endpoints are the channel through which we can communicate ex- /user
 
+# API Documentation link
+
+https://documenter.getpostman.com/view/24055761/2s8YKFEh1m
+
 ## /users
 
 (to add a emoji 'fn+start' btn + ';')
@@ -23,7 +27,7 @@ DELETE: Delete a user by id(check if he/she still has an issued book)
 
 ## /users/subscription-details/{id}
 
-GET: Get user subscription details
+GET: Get user subscription details ✅
 
 1. Date of subscription
 2. Expiration date
@@ -45,7 +49,7 @@ GET: Get all issued books ✅
 
 ## /books/issued/withFine
 
-GET: Get all issued books with fine
+GET: Get all issued books with fine ✅
 fine: can be generated on server with Date in js
 
 # Subscription Types
@@ -54,7 +58,9 @@ Basic (3 months)
 Standard (6 months)
 Premium (12 months)
 
-If the subscription date is 24/10/22
+dates format is mm/dd/yyyy;
+
+If the subscription date is 24/10/22--- (here format to understand is dd/mm/yyyy)
 and Subscription Type is Standard then,
 the expiration date will be 24/04/23..
 
