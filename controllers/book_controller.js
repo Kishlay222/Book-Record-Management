@@ -40,6 +40,30 @@ exports.getSingleBookById = async (req, res) => {
     });
 };
 
+//additional route
+exports.getSingleBookByName = async (req, res) => {
+    const {
+        name
+    } = req.params;
+
+    //const book = books.find((each) => each.id === id);
+    //changed
+    const book = await bookModel.findOne({
+        name: name
+    });
+
+    if (!book) {
+        return res.status(404).json({
+            success: false,
+            message: "Book not Found"
+        });
+    }
+    res.status(200).json({
+        success: true,
+        data: book
+    });
+};
+
 exports.getAllIssuedBooks = async (req, res) => {
     /*const usersWithIssuedBooks = users.filter((each) => {
          if (each.issuedBook) return each; //filtering users having issuedBook property
@@ -78,5 +102,78 @@ exports.getAllIssuedBooks = async (req, res) => {
     res.status(200).json({
         success: true,
         data: issuedBooks
+    });
+};
+
+exports.addNewBook = async (req, res) => {
+    const {
+        data
+    } = req.body;
+    //if data is empty for new book 
+    if (!data) {
+        return res.status(400).json({
+            success: false,
+            message: "Data not provided"
+        });
+    }
+    //data provided---find any other book with same id exists or not 
+    //if exists dont create
+    //const book = books.find((each) => each.id == data.id);
+    await bookModel.create(data);
+    const allBooks = await bookModel.find();
+
+    //no need to check with id
+    //as mongoose does that automatically
+    /*if (book) {
+        return res.status(404).json({
+            success: false,
+            message: "Book already exists,use a unique id"
+        });
+    }*/
+    //if id is unique then
+    //const newbooklist = [...books, data];
+    res.status(200).json({
+        success: true,
+        data: allBooks
+    });
+
+};
+
+exports.updateBookById = async (req, res) => {
+    const {
+        id
+    } = req.params;
+    const {
+        data
+    } = req.body;
+    /* const book = books.find((each) => each.id === id);
+     if (!book) {
+         return res.status(404).json({
+             success: false,
+             message: "Book not found to update by id"
+         });
+     }
+     const updatedData = books.map((each) => {
+         if (each.id === id) {
+             return {
+                 ...each,
+                 ...data //updation from req.body as its equal to data
+             };
+         }
+         return each;
+     });
+     */
+
+    const updatedBook = await bookModel.findOneAndUpdate({
+            _id: id, //find book on basis on id
+        },
+        data, //add new data from body
+        {
+            new: true, //to get the updated data
+        });
+
+    res.status(200).json({
+        success: true,
+        data: updatedBook
     });
 };

@@ -11,7 +11,11 @@ const {
 const {
     getAllBook,
     getSingleBookById,
-    getAllIssuedBooks
+    getSingleBookByName,
+    getAllIssuedBooks,
+    addNewBook,
+    updateBookById,
+
 } = require("../controllers/book_controller");
 
 const router = express.Router();
@@ -36,6 +40,9 @@ router.get("/", getAllBook);
 
 router.get("/:id", getSingleBookById);
 
+//additional route
+router.get("/getBook/name/:name", getSingleBookByName);
+
 /**
  * Route: /books/issued/by-users
  * (as only in /issued its reads the 1st char and points to /id route)
@@ -56,34 +63,7 @@ router.get("/issued/by-users", getAllIssuedBooks);
  * Data: id,name,author,genre,price,publisher (need for a new book to add)
  */
 
-router.post("/", (req, res) => {
-    const {
-        data
-    } = req.body;
-    //if data is empty for new book 
-    if (!data) {
-        return res.status(400).json({
-            success: false,
-            message: "Data not provided"
-        });
-    }
-    //data provided---find any other book with same id exists or not 
-    //if exists dont create
-    const book = books.find((each) => each.id == data.id);
-    if (book) {
-        return res.status(404).json({
-            success: false,
-            message: "Book already exists,use a unique id"
-        });
-    }
-    //if id is unique then
-    const newbooklist = [...books, data];
-    res.status(200).json({
-        success: true,
-        data: newbooklist
-    });
-
-});
+router.post("/", addNewBook);
 
 /**
  * Route: /books/{id}
@@ -94,34 +74,7 @@ router.post("/", (req, res) => {
  * Data: id,name,author,genre,price,publisher (need for a new book to add)
  */
 
-router.put("/:id", (req, res) => {
-    const {
-        id
-    } = req.params;
-    const {
-        data
-    } = req.body;
-    const book = books.find((each) => each.id === id);
-    if (!book) {
-        return res.status(404).json({
-            success: false,
-            message: "Book not found to update by id"
-        });
-    }
-    const updatedData = books.map((each) => {
-        if (each.id === id) {
-            return {
-                ...each,
-                ...data //updation from req.body as its equal to data
-            };
-        }
-        return each;
-    });
-    res.status(200).json({
-        success: true,
-        data: updatedData
-    });
-});
+router.put("/:id", updateBookById);
 
 /**
  * Route: /books/issued/with-fine
